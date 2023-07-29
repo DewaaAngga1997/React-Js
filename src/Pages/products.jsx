@@ -7,7 +7,7 @@ const products = [
   {
     id: 1,
     image: '/images/product-1.jpg',
-    name: 'Sepatu Nike Green',
+    name: 'Sepatu Nike',
     price: 1000000,
     description:
       'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam exercitationem unde inventore adipisci alias pariatur cumque, aut aliquam sunt possimus doloremque similique quam est voluptatibus facere, iste placeat enim iure.',
@@ -15,14 +15,14 @@ const products = [
   {
     id: 2,
     image: '/images/product-2.jpg',
-    name: 'Sepatu Nike Red',
+    name: 'Sepatu Cat ',
     price: 1500000,
     description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. ',
   },
   {
     id: 3,
     image: '/images/product-1.jpg',
-    name: 'Sepatu Nike Red',
+    name: 'Sepatu Kuda ',
     price: 500000,
     description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. ',
   },
@@ -48,13 +48,11 @@ const ProductsPage = () => {
 
   //code untuk hendle cart menampilkan data di cart
   const handleAddtoCart = (id) => {
-    setCart([
-      ...cart,
-      {
-        id: id,
-        qty: 1,
-      },
-    ]);
+    if (cart.find((item) => item.id === id)) {
+      setCart(cart.map((item) => (item.id === id ? { ...item, qty: item.qty + 1 } : item)));
+    } else {
+      setCart([...cart, { id, qty: 1 }]);
+    }
   };
 
   return (
@@ -66,7 +64,7 @@ const ProductsPage = () => {
         </Button>
       </div>
       <div className="flex justify-center py-5">
-        <div className="w-3/4 flex flex-wrap">
+        <div className="w-4/6 flex flex-wrap">
           {products.map((product) => (
             //code di bawah ini key={product.id} harus dibuat agar agar tidak ada error di console log
             <CardProduct key={product.id}>
@@ -78,13 +76,31 @@ const ProductsPage = () => {
             </CardProduct>
           ))}
         </div>
-        <div className="w-1/4">
-          <h1 className="text-blue-600 font-bold text-3xl">Cart</h1>
-          <ul>
-            {cart.map((item) => (
-              <li key={item}>{item.id}</li>
-            ))}
-          </ul>
+        <div className="w-2/6">
+          <h1 className="text-blue-600 font-bold text-3xl ml-5 mb-2 ">Cart</h1>
+          <table className="text-left table-auto border-separate border-spacing-x-5 ">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cart.map((item) => {
+                const product = products.find((product) => product.id === item.id);
+                return (
+                  <tr key={item.id}>
+                    <td>{product.name}</td>
+                    <td>Rp {product.price.toLocaleString('id-ID', { styles: 'currency', currency: 'IDR' })}</td>
+                    <td>{item.qty}</td>
+                    <td>Rp {(item.qty * product.price).toLocaleString('id-ID', { styles: 'currency', currency: 'IDR' })}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
       {/* <div className="flex justify-center w-100">
