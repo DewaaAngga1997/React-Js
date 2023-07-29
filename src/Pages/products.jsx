@@ -48,6 +48,7 @@ const ProductsPage = () => {
       </div>
       <div className="flex justify-center py-5">
         {products.map((product) => (
+          //code di bawah ini key={product.id} harus dibuat agar agar tidak ada error di console log
           <CardProduct key={product.id}>
             <CardProduct.Header image={product.image} />
             <CardProduct.Body name={product.name}>{product.description}</CardProduct.Body>
