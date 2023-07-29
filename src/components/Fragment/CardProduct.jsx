@@ -27,12 +27,14 @@ const Body = (props) => {
 };
 
 const Footer = (props) => {
-  const { price, children } = props;
+  const { price, children, handleAddToCart, id } = props;
   return (
     <div className="flex items-center justify-between px-5 pb-5">
       <span className="text-xl text-white font-bold">Rp {price.toLocaleString('id-ID', { styles: 'currency', currency: 'IDR' })}</span>
       {/* code {price.toLocaleString('id-ID', { styles: 'currency', currency: 'IDR' })} untuk format IDR titiknya */}
-      <Button classname="bg-blue-600">{children}</Button>
+      <Button classname="bg-blue-600" onClick={() => handleAddToCart(id)}>
+        {children}
+      </Button>
     </div>
   );
 };

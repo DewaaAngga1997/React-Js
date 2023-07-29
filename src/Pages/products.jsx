@@ -34,7 +34,7 @@ const email = localStorage.getItem('email');
 const ProductsPage = () => {
   const [cart, setCart] = useState([
     {
-      name: 'Sepatu Nike Red',
+      id: 1,
       qty: 1,
     },
   ]);
@@ -44,6 +44,17 @@ const ProductsPage = () => {
     localStorage.removeItem('email');
     localStorage.removeItem('password');
     window.location.href = '/login';
+  };
+
+  //code untuk hendle cart menampilkan data di cart
+  const handleAddtoCart = (id) => {
+    setCart([
+      ...cart,
+      {
+        id: id,
+        qty: 1,
+      },
+    ]);
   };
 
   return (
@@ -61,7 +72,9 @@ const ProductsPage = () => {
             <CardProduct key={product.id}>
               <CardProduct.Header image={product.image} />
               <CardProduct.Body name={product.name}>{product.description}</CardProduct.Body>
-              <CardProduct.Footer price={product.price}>Add To Cart</CardProduct.Footer>
+              <CardProduct.Footer price={product.price} id={product.id} handleAddToCart={handleAddtoCart}>
+                Add To Cart
+              </CardProduct.Footer>
             </CardProduct>
           ))}
         </div>
@@ -69,7 +82,7 @@ const ProductsPage = () => {
           <h1 className="text-blue-600 font-bold text-3xl">Cart</h1>
           <ul>
             {cart.map((item) => (
-              <li key={item.name}>{item.name}</li>
+              <li key={item}>{item.id}</li>
             ))}
           </ul>
         </div>
