@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import CardProduct from '../components/Fragment/CardProduct';
 import Button from '../components/Elements/Button/Button';
 // import Counter from '../components/Fragment/Counter';
@@ -8,7 +8,7 @@ const products = [
     id: 1,
     image: '/images/product-1.jpg',
     name: 'Sepatu Nike Green',
-    price: 'Rp 1.000.000',
+    price: 1000000,
     description:
       'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam exercitationem unde inventore adipisci alias pariatur cumque, aut aliquam sunt possimus doloremque similique quam est voluptatibus facere, iste placeat enim iure.',
   },
@@ -16,14 +16,14 @@ const products = [
     id: 2,
     image: '/images/product-2.jpg',
     name: 'Sepatu Nike Red',
-    price: 'Rp 1.500.000',
+    price: 1500000,
     description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. ',
   },
   {
     id: 3,
     image: '/images/product-1.jpg',
     name: 'Sepatu Nike Red',
-    price: 'Rp 500.000',
+    price: 500000,
     description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. ',
   },
 ];
@@ -32,6 +32,13 @@ const products = [
 const email = localStorage.getItem('email');
 
 const ProductsPage = () => {
+  const [cart, setCart] = useState([
+    {
+      name: 'Sepatu Nike Red',
+      qty: 1,
+    },
+  ]);
+
   //code di bawah ada lah menghendle button logout
   const handleLogout = () => {
     localStorage.removeItem('email');
@@ -58,7 +65,14 @@ const ProductsPage = () => {
             </CardProduct>
           ))}
         </div>
-        <div className="w-1/4"></div>
+        <div className="w-1/4">
+          <h1 className="text-blue-600 font-bold text-3xl">Cart</h1>
+          <ul>
+            {cart.map((item) => (
+              <li key={item.name}>{item.name}</li>
+            ))}
+          </ul>
+        </div>
       </div>
       {/* <div className="flex justify-center w-100">
         <Counter></Counter>
