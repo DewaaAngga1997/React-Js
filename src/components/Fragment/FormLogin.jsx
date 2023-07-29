@@ -16,7 +16,7 @@ const FormLogin = () => {
     <form onSubmit={handleLogin}>
       <InputForm label="Email" type="email" placeholder="example@mail.com" name="email"></InputForm>
       <InputForm label="Password" type="password" placeholder="******" name="password"></InputForm>
-      <Button classname="bg-blue-600 w-full" type="submit" onClick={handleLogin}>
+      <Button classname="bg-blue-600 w-full" type="submit" onClick={() => handleLogin}>
         Login
       </Button>
     </form>

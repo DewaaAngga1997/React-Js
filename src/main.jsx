@@ -11,7 +11,7 @@ import ProductsPage from './Pages/products';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <div>Sangat Melelahkan</div>,
+    element: <LoginPage />,
     // kode error elemen ini digunakan agar saat route di input salah akan menuju ErrorPage di file error404
     errorElement: <ErrorPage />,
   },

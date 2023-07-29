@@ -59,7 +59,7 @@ const ProductsPage = () => {
     <Fragment>
       <div className="flex justify-end h-20 bg-blue-600 text-white px-10 items-center">
         {email}
-        <Button classname="ml-5 bg-red-600" onclick={handleLogout}>
+        <Button classname="ml-5 bg-red-600" onClick={() => handleLogout()}>
           Logout
         </Button>
       </div>
