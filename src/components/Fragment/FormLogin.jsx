@@ -2,6 +2,7 @@ import InputForm from '../Elements/Input/Index';
 import Button from '../Elements/Button/Button';
 
 const FormLogin = () => {
+  // di bawah ini fungsi hendle login
   const handleLogin = (event) => {
     event.preventDefault();
     // code local storage untuk menyimpat data ke local storage
