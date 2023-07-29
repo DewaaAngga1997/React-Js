@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 import CardProduct from '../components/Fragment/CardProduct';
 import Button from '../components/Elements/Button/Button';
+// import Counter from '../components/Fragment/Counter';
 
 const products = [
   {
@@ -47,15 +48,21 @@ const ProductsPage = () => {
         </Button>
       </div>
       <div className="flex justify-center py-5">
-        {products.map((product) => (
-          //code di bawah ini key={product.id} harus dibuat agar agar tidak ada error di console log
-          <CardProduct key={product.id}>
-            <CardProduct.Header image={product.image} />
-            <CardProduct.Body name={product.name}>{product.description}</CardProduct.Body>
-            <CardProduct.Footer price={product.price}>Add To Cart</CardProduct.Footer>
-          </CardProduct>
-        ))}
+        <div className="w-3/4 flex flex-wrap">
+          {products.map((product) => (
+            //code di bawah ini key={product.id} harus dibuat agar agar tidak ada error di console log
+            <CardProduct key={product.id}>
+              <CardProduct.Header image={product.image} />
+              <CardProduct.Body name={product.name}>{product.description}</CardProduct.Body>
+              <CardProduct.Footer price={product.price}>Add To Cart</CardProduct.Footer>
+            </CardProduct>
+          ))}
+        </div>
+        <div className="w-1/4"></div>
       </div>
+      {/* <div className="flex justify-center w-100">
+        <Counter></Counter>
+      </div> */}
     </Fragment>
   );
 };
