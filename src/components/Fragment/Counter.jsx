@@ -5,6 +5,21 @@ class Counter extends React.Component {
     super(props);
     this.state = { count: 0 };
   }
+
+  //componentDidMount()
+  //apa yang ada di konstruktor akan di timpa oleh komponen didmount
+  componentDidMount() {
+    this.setState({ count: 1 });
+  }
+
+  //dia akan melihat setiap perubahan yang terjadi pada komponen tersebut
+  componentDidUpdate(prevProps, prevState) {
+    console.log('componentDidUpdate');
+    if (this.state.count === 10) {
+      this.setState({ count: 0 });
+    }
+  }
+
   render() {
     return (
       <div className="flex justify-center items-center">
