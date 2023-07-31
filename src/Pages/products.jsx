@@ -32,12 +32,7 @@ const products = [
 const email = localStorage.getItem('email');
 
 const ProductsPage = () => {
-  const [cart, setCart] = useState([
-    {
-      id: 1,
-      qty: 1,
-    },
-  ]);
+  const [cart, setCart] = useState([]);
 
   //code di bawah ada lah menghendle button logout
   const handleLogout = () => {
@@ -99,13 +94,21 @@ const ProductsPage = () => {
                   </tr>
                 );
               })}
+              <tr>
+                <td colSpan={3}>
+                  <b>Total Price</b>
+                </td>
+                <td>
+                  <b>Rp {(10000000).toLocaleString('id-ID', { styles: 'currency', currency: 'IDR' })}</b>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div className="flex justify-center mb-5">
+      {/* <div className="flex justify-center mb-5">
         <Counter></Counter>
-      </div>
+      </div> */}
     </Fragment>
   );
 };
