@@ -33,10 +33,8 @@ const email = localStorage.getItem('email');
 
 const ProductsPage = () => {
   const [cart, setCart] = useState([]);
-  //code di bawah adalah untuk membuat set awal total price (sama seperti komponen didmount tapi menggunakan use effect)
-  const [totalPrice, setTotalPrice] = useState(0);
-  useEffect(() => {
-    //code di bawah parsing datanya dari local storage kalau misalnya ada tampilkan kalau tidak tampilkan data kosong
+  const [totalPrice, setTotalPrice] = useState(0);  //code ini adalah untuk membuat set awal total price (sama seperti komponen didmount tapi menggunakan use effect)
+  useEffect(() => { //code di bawah parsing datanya dari local storage kalau misalnya ada tampilkan kalau tidak tampilkan data kosong
     setCart(JSON.parse(localStorage.getItem('cart') || '[]'));
   }, []);
 
@@ -49,8 +47,7 @@ const ProductsPage = () => {
         return acc + product.price * item.qty;
       }, 0);
       setTotalPrice(sum);
-      //simpan data di local storage setelah terjadi perubahan pada state cart
-      localStorage.setItem('cart', JSON.stringify(cart));
+      localStorage.setItem('cart', JSON.stringify(cart)); //simpan data di local storage setelah terjadi perubahan pada state cart
     }
   }, [cart]);
 
