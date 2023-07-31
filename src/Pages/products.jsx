@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import CardProduct from '../components/Fragment/CardProduct';
 import Button from '../components/Elements/Button/Button';
 import Counter from '../components/Fragment/Counter';
@@ -33,6 +33,26 @@ const email = localStorage.getItem('email');
 
 const ProductsPage = () => {
   const [cart, setCart] = useState([]);
+  //code di bawah adalah untuk membuat set awal total price (sama seperti komponen didmount tapi menggunakan use effect)
+  const [totalPrice, setTotalPrice] = useState(0);
+  useEffect(() => {
+    //code di bawah parsing datanya dari local storage kalau misalnya ada tampilkan kalau tidak tampilkan data kosong
+    setCart(JSON.parse(localStorage.getItem('cart') || '[]'));
+  }, []);
+
+  //code di bawah adalah untuk membuat total price (sama seperti komponen didupdate tapi menggunakan use effect)
+  useEffect(() => {
+    //code di bawah if (cart.length > 0) => jika ada data lakukan hal ini kalau tidak biarkan tetap 0 jangan di jumlahkan
+    if (cart.length > 0) {
+      const sum = cart.reduce((acc, item) => {
+        const product = products.find((product) => product.id === item.id);
+        return acc + product.price * item.qty;
+      }, 0);
+      setTotalPrice(sum);
+      //simpan data di local storage setelah terjadi perubahan pada state cart
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+  }, [cart]);
 
   //code di bawah ada lah menghendle button logout
   const handleLogout = () => {
@@ -99,7 +119,7 @@ const ProductsPage = () => {
                   <b>Total Price</b>
                 </td>
                 <td>
-                  <b>Rp {(10000000).toLocaleString('id-ID', { styles: 'currency', currency: 'IDR' })}</b>
+                  <b>Rp {totalPrice.toLocaleString('id-ID', { styles: 'currency', currency: 'IDR' })}</b>
                 </td>
               </tr>
             </tbody>
