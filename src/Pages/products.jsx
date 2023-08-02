@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import CardProduct from '../components/Fragment/CardProduct';
 import Button from '../components/Elements/Button/Button';
 import Counter from '../components/Fragment/Counter';
@@ -33,8 +33,9 @@ const email = localStorage.getItem('email');
 
 const ProductsPage = () => {
   const [cart, setCart] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);  //code ini adalah untuk membuat set awal total price (sama seperti komponen didmount tapi menggunakan use effect)
-  useEffect(() => { //code di bawah parsing datanya dari local storage kalau misalnya ada tampilkan kalau tidak tampilkan data kosong
+  const [totalPrice, setTotalPrice] = useState(0); //code ini adalah untuk membuat set awal total price (sama seperti komponen didmount tapi menggunakan use effect)
+  useEffect(() => {
+    //code di bawah parsing datanya dari local storage kalau misalnya ada tampilkan kalau tidak tampilkan data kosong
     setCart(JSON.parse(localStorage.getItem('cart') || '[]'));
   }, []);
 
@@ -66,6 +67,20 @@ const ProductsPage = () => {
       setCart([...cart, { id, qty: 1 }]);
     }
   };
+
+  // UseRef bisa di gunakan untuk memanipulasi DOM contohnya kita akan menggunakan useRef
+  // untuk memanipulasi table row total price jika belum ada data di cart total price tidak akan di tampilkan (cek lanjutannya di table tr)
+  const totalPriceRef = useRef(null);
+  console.log(totalPriceRef);
+  useEffect(() => {
+    if (cart.length > 0) {
+      //jika cart ada data maka tampilkan data
+      totalPriceRef.current.style.display = 'table-row';
+    } else {
+      //jika cart tidak ada data maka jangan di tampilkan data
+      totalPriceRef.current.style.display = 'none';
+    }
+  }, [cart]);
 
   return (
     <Fragment>
@@ -111,7 +126,8 @@ const ProductsPage = () => {
                   </tr>
                 );
               })}
-              <tr>
+              {/* useReff jika DOM biasanya mengambil id , tapi useReff menggunakan reff untuk mengambil element htmlnya  */}
+              <tr ref={totalPriceRef}>
                 <td colSpan={3}>
                   <b>Total Price</b>
                 </td>
