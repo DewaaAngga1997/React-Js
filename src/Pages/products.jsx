@@ -2,31 +2,7 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 import CardProduct from '../components/Fragment/CardProduct';
 import Button from '../components/Elements/Button/Button';
 import Counter from '../components/Fragment/Counter';
-
-const products = [
-  {
-    id: 1,
-    image: '/images/product-1.jpg',
-    name: 'Sepatu Nike',
-    price: 1000000,
-    description:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam exercitationem unde inventore adipisci alias pariatur cumque, aut aliquam sunt possimus doloremque similique quam est voluptatibus facere, iste placeat enim iure.',
-  },
-  {
-    id: 2,
-    image: '/images/product-2.jpg',
-    name: 'Sepatu Cat ',
-    price: 1500000,
-    description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. ',
-  },
-  {
-    id: 3,
-    image: '/images/product-1.jpg',
-    name: 'Sepatu Kuda ',
-    price: 500000,
-    description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. ',
-  },
-];
+import { getProducts } from '../services/product.service';
 
 //cara memanggil email yg sudah tersimpan saat login di local storage
 const email = localStorage.getItem('email');
@@ -34,9 +10,17 @@ const email = localStorage.getItem('email');
 const ProductsPage = () => {
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0); //code ini adalah untuk membuat set awal total price (sama seperti komponen didmount tapi menggunakan use effect)
+  const [products, setProducts] = useState([]);
+
   useEffect(() => {
     //code di bawah parsing datanya dari local storage kalau misalnya ada tampilkan kalau tidak tampilkan data kosong
     setCart(JSON.parse(localStorage.getItem('cart') || '[]'));
+  }, []);
+
+  useEffect(() => {
+    getProducts((data) => {
+      setProducts(data);
+    });
   }, []);
 
   //code di bawah adalah untuk membuat total price (sama seperti komponen didupdate tapi menggunakan use effect)
@@ -71,7 +55,7 @@ const ProductsPage = () => {
   // UseRef bisa di gunakan untuk memanipulasi DOM contohnya kita akan menggunakan useRef
   // untuk memanipulasi table row total price jika belum ada data di cart total price tidak akan di tampilkan (cek lanjutannya di table tr)
   const totalPriceRef = useRef(null);
-  console.log(totalPriceRef);
+
   useEffect(() => {
     if (cart.length > 0) {
       //jika cart ada data maka tampilkan data
@@ -96,7 +80,7 @@ const ProductsPage = () => {
             //code di bawah ini key={product.id} harus dibuat agar agar tidak ada error di console log
             <CardProduct key={product.id}>
               <CardProduct.Header image={product.image} />
-              <CardProduct.Body name={product.name}>{product.description}</CardProduct.Body>
+              <CardProduct.Body name={product.title}>{product.description}</CardProduct.Body>
               <CardProduct.Footer price={product.price} id={product.id} handleAddToCart={handleAddtoCart}>
                 Add To Cart
               </CardProduct.Footer>
@@ -119,7 +103,7 @@ const ProductsPage = () => {
                 const product = products.find((product) => product.id === item.id);
                 return (
                   <tr key={item.id}>
-                    <td>{product.name}</td>
+                    <td>{product.title}</td>
                     <td>Rp {product.price.toLocaleString('id-ID', { styles: 'currency', currency: 'IDR' })}</td>
                     <td>{item.qty}</td>
                     <td>Rp {(item.qty * product.price).toLocaleString('id-ID', { styles: 'currency', currency: 'IDR' })}</td>
