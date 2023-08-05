@@ -107,10 +107,10 @@ const ProductsPage = () => {
                   const product = products.find((product) => product.id === item.id);
                   return (
                     <tr key={item.id}>
-                      <td>{product.title}</td>
-                      <td>Rp {product.price.toLocaleString('id-ID', { styles: 'currency', currency: 'IDR' })}</td>
+                      <td>{product.title.substring(0, 20)}...</td>
+                      <td>$ {product.price.toLocaleString('id-ID', { styles: 'currency', currency: 'USD' })}</td>
                       <td>{item.qty}</td>
-                      <td>Rp {(item.qty * product.price).toLocaleString('id-ID', { styles: 'currency', currency: 'IDR' })}</td>
+                      <td>$ {(item.qty * product.price).toLocaleString('id-ID', { styles: 'currency', currency: 'USD' })}</td>
                     </tr>
                   );
                 })}
@@ -120,7 +120,7 @@ const ProductsPage = () => {
                   <b>Total Price</b>
                 </td>
                 <td>
-                  <b>Rp {totalPrice.toLocaleString('id-ID', { styles: 'currency', currency: 'IDR' })}</b>
+                  <b>$ {totalPrice.toLocaleString('id-ID', { styles: 'currency', currency: 'USD' })}</b>
                 </td>
               </tr>
             </tbody>
