@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+//ini code GET data dari API
 export const getProducts = (callback) => {
   axios
     .get('https://fakestoreapi.com/products')
