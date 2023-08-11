@@ -3,6 +3,7 @@ import CardProduct from '../components/Fragment/CardProduct';
 import Button from '../components/Elements/Button/Button';
 import { getProducts } from '../services/product.service';
 import { getUsername } from '../services/auth.service';
+import { useLogin } from '../hooks/useLogin';
 
 //cara memanggil username dari token yang sudah tersimpan dari local storage
 
@@ -10,21 +11,11 @@ const ProductsPage = () => {
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0); //code ini adalah untuk membuat set awal total price (sama seperti komponen didmount tapi menggunakan use effect)
   const [products, setProducts] = useState([]);
-  const [username, setUsername] = useState('');
+  const username = useLogin();
 
   useEffect(() => {
     //code di bawah parsing datanya dari local storage kalau misalnya ada tampilkan kalau tidak tampilkan data kosong
     setCart(JSON.parse(localStorage.getItem('cart') || '[]'));
-  }, []);
-
-  useEffect(() => {
-    // kode ini menghendle agarsaat memasukan /products di http sebelum ada token tidak bisa langsung masuk ke halaman products
-    const token = localStorage.getItem('token');
-    if (token) {
-      setUsername(getUsername(token));
-    } else {
-      window.location.href = '/login';
-    }
   }, []);
 
   useEffect(() => {
