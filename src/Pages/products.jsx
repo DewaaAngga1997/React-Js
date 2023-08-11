@@ -1,20 +1,30 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
 import CardProduct from '../components/Fragment/CardProduct';
 import Button from '../components/Elements/Button/Button';
-import Counter from '../components/Fragment/Counter';
 import { getProducts } from '../services/product.service';
+import { getUsername } from '../services/auth.service';
 
-//cara memanggil email yg sudah tersimpan saat login di local storage
-const email = localStorage.getItem('email');
+//cara memanggil username dari token yang sudah tersimpan dari local storage
 
 const ProductsPage = () => {
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0); //code ini adalah untuk membuat set awal total price (sama seperti komponen didmount tapi menggunakan use effect)
   const [products, setProducts] = useState([]);
+  const [username, setUsername] = useState('');
 
   useEffect(() => {
     //code di bawah parsing datanya dari local storage kalau misalnya ada tampilkan kalau tidak tampilkan data kosong
     setCart(JSON.parse(localStorage.getItem('cart') || '[]'));
+  }, []);
+
+  useEffect(() => {
+    // kode ini menghendle agarsaat memasukan /products di http sebelum ada token tidak bisa langsung masuk ke halaman products
+    const token = localStorage.getItem('token');
+    if (token) {
+      setUsername(getUsername(token));
+    } else {
+      window.location.href = '/login';
+    }
   }, []);
 
   useEffect(() => {
@@ -38,8 +48,7 @@ const ProductsPage = () => {
 
   //code di bawah ada lah menghendle button logout
   const handleLogout = () => {
-    localStorage.removeItem('email');
-    localStorage.removeItem('password');
+    localStorage.removeItem('token');
     window.location.href = '/login';
   };
 
@@ -69,7 +78,7 @@ const ProductsPage = () => {
   return (
     <Fragment>
       <div className="flex justify-end h-20 bg-blue-600 text-white px-10 items-center">
-        {email}
+        {username}
         <Button classname="ml-5 bg-red-600" onClick={() => handleLogout()}>
           Logout
         </Button>

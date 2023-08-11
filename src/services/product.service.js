@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-//ini code GET data dari API
+//ini code GET data dari API//lanjutan di file product.jsx baris ke 5 dan ke 20
 export const getProducts = (callback) => {
   axios
     .get('https://fakestoreapi.com/products')
@@ -8,6 +8,6 @@ export const getProducts = (callback) => {
       callback(res.data);
     })
     .catch((err) => {
-      console.log(err);
+      callback(err);
     });
 };
