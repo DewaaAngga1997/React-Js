@@ -42,7 +42,7 @@ const FormLogin = () => {
   return (
     <form onSubmit={handleLogin}>
       {/* tambahkan ref={usernameRef} pada input username */}
-      <InputForm label="username" type="text" placeholder="Jhon Doe" name="username" ref={usernameRef}></InputForm>
+      <InputForm label="Username" type="text" placeholder="Jhon Doe" name="username" ref={usernameRef}></InputForm>
       <InputForm label="Password" type="password" placeholder="******" name="password"></InputForm>
       <Button classname="bg-blue-600 w-full" type="submit" onClick={() => handleLogin}>
         Login
